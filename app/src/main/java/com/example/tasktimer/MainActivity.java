@@ -1,5 +1,6 @@
 package com.example.tasktimer;
 
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -29,8 +30,11 @@ public class MainActivity extends AppCompatActivity {
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
         setSupportActionBar(binding.toolbar);
+
+        AppDatabase appDatabase = AppDatabase.getInstance(this);
+        final SQLiteDatabase db = appDatabase.getReadableDatabase();
+
     }
 
     @Override
