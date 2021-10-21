@@ -5,6 +5,12 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+/**
+ * Basic database class for the application
+ *
+ * The only class that should use this is {@link AppProvider}
+ */
+
 class AppDatabase extends SQLiteOpenHelper {
     private static final String TAG = "AppDatabase";
 
