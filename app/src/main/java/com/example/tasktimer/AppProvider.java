@@ -111,7 +111,7 @@ public class AppProvider extends ContentProvider {
     @Nullable
     @Override
     public String getType(@NonNull Uri uri) {
-        Log.d(TAG, "getType: called with uri" + uri);
+        Log.d(TAG, "getType: called with URI" + uri);
         final int match = sUriMatcher.match(uri);
 
         switch (match) {
@@ -137,7 +137,40 @@ public class AppProvider extends ContentProvider {
     @Nullable
     @Override
     public Uri insert(@NonNull Uri uri, @Nullable ContentValues values) {
-        return null;
+        Log.d(TAG, "Entering insert: called with URI " + uri);
+        final int match = sUriMatcher.match(uri);
+        Log.d(TAG, "insert: match is " + match);
+
+        final SQLiteDatabase db;
+        Uri returnUri;
+        long recordId;
+
+        switch (match) {
+            case TASKS:
+                db = mOpenHelper.getReadableDatabase();
+                recordId = db.insert(TasksContract.TABLE_NAME, null, values);
+                if (recordId > 0) {
+                    returnUri = TasksContract.buildTaskUri(recordId);
+                } else {
+                    throw new android.database.SQLException("Failed to insert with URI " + uri.toString());
+                }
+                break;
+
+//            case TIMINGS:
+//                db = mOpenHelper.getReadableDatabase();
+//                recordId = db.insert(TimingsContract.TABLE_NAME, null, values);
+//                if (recordId > 0) {
+//                    returnUri = TimingsContract.buildTaskUri(recordId);
+//                } else {
+//                    throw new android.database.SQLException("Failed to insert with URI " + uri.toString());
+//                }
+//                break;
+
+            default:
+                throw new IllegalStateException("Unkonw URI " + uri);
+        }
+        Log.d(TAG, "Exiting insert: returning with URI " + returnUri);
+        return returnUri;
     }
 
     @Override
