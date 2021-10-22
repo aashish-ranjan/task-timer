@@ -111,7 +111,27 @@ public class AppProvider extends ContentProvider {
     @Nullable
     @Override
     public String getType(@NonNull Uri uri) {
-        return null;
+        Log.d(TAG, "getType: called with uri" + uri);
+        final int match = sUriMatcher.match(uri);
+
+        switch (match) {
+            case TASKS:
+                return TasksContract.CONTENT_TYPE;
+            case TASKS_ID:
+                return TasksContract.CONTENT_TYPE_ITEM;
+
+//            case TIMINGS:
+//                return TimingsContract.CONTENT_TYPE;
+//            case TIMINGS_ID:
+//                return TimingsContract.CONTENT_TYPE_ITEM;
+//
+//            case TASKS_DURATIONS:S:
+//                return DurationsContract.CONTENT_TYPE;
+//            case TASKS_DURATIONS_ID:
+//                return DurationsContract.CONTENT_TYPE_ITEM;
+            default:
+                throw new IllegalStateException("Unknown URI " + uri);
+        }
     }
 
     @Nullable
