@@ -34,8 +34,10 @@ public class MainActivity extends AppCompatActivity {
 
         ContentResolver contentResolver = getContentResolver();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(TasksContract.Columns.SORT_ORDER, "3");
-        contentResolver.update(TasksContract.buildTaskUri(3), contentValues, null, null);
+        contentValues.put(TasksContract.Columns.DESCRIPTION, "completed");
+
+        String selection = TasksContract.Columns.SORT_ORDER + " >= 2";
+        contentResolver.update(TasksContract.CONTENT_URI, contentValues, selection, null);
 
         String []  projection = {
                 TasksContract.Columns._ID,
