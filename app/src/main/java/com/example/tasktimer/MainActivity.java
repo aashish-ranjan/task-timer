@@ -33,11 +33,11 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(binding.toolbar);
 
         ContentResolver contentResolver = getContentResolver();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(TasksContract.Columns.DESCRIPTION, "completed");
 
-        String selection = TasksContract.Columns.SORT_ORDER + " >= 2";
-        contentResolver.update(TasksContract.CONTENT_URI, contentValues, selection, null);
+        String selection = TasksContract.Columns.SORT_ORDER + " >= ?";
+        String[] args = { "2" };
+        int count = contentResolver.delete(TasksContract.CONTENT_URI, selection, args);
+        Log.d(TAG, "onCreate: " + count + " record(s) deleted");
 
         String []  projection = {
                 TasksContract.Columns._ID,
