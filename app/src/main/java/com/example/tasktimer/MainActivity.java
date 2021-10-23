@@ -34,9 +34,8 @@ public class MainActivity extends AppCompatActivity {
 
         ContentResolver contentResolver = getContentResolver();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(TasksContract.Columns.NAME, "TasksName3");
-        contentValues.put(TasksContract.Columns.DESCRIPTION, "desc3");
-        contentResolver.insert(TasksContract.CONTENT_URI, contentValues);
+        contentValues.put(TasksContract.Columns.SORT_ORDER, "3");
+        contentResolver.update(TasksContract.buildTaskUri(3), contentValues, null, null);
 
         String []  projection = {
                 TasksContract.Columns._ID,
