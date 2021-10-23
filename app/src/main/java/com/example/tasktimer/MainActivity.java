@@ -30,16 +30,18 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         setSupportActionBar(binding.toolbar);
 
-//        AppDatabase appDatabase = AppDatabase.getInstance(this);
-//        final SQLiteDatabase db = appDatabase.getReadableDatabase();
+        String []  projection = {
+                TasksContract.Columns._ID,
+                TasksContract.Columns.NAME,
+                TasksContract.Columns.DESCRIPTION,
+                TasksContract.Columns.SORT_ORDER };
 
-        String []  projection = { TasksContract.Columns.NAME, TasksContract.Columns.DESCRIPTION };
         ContentResolver contentResolver = getContentResolver();
         Cursor cursor = contentResolver.query(TasksContract.CONTENT_URI,
                 projection,
                 null,
                 null,
-                TasksContract.Columns.NAME);
+                TasksContract.Columns.SORT_ORDER);
 
         if (cursor != null) {
             Log.d(TAG, "onCreate: no. of rows: " + cursor.getCount());
