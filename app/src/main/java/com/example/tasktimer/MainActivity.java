@@ -1,8 +1,10 @@
 package com.example.tasktimer;
 
 import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,13 +32,18 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         setSupportActionBar(binding.toolbar);
 
+        ContentResolver contentResolver = getContentResolver();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(TasksContract.Columns.NAME, "TasksName3");
+        contentValues.put(TasksContract.Columns.DESCRIPTION, "desc3");
+        contentResolver.insert(TasksContract.CONTENT_URI, contentValues);
+
         String []  projection = {
                 TasksContract.Columns._ID,
                 TasksContract.Columns.NAME,
                 TasksContract.Columns.DESCRIPTION,
                 TasksContract.Columns.SORT_ORDER };
 
-        ContentResolver contentResolver = getContentResolver();
         Cursor cursor = contentResolver.query(TasksContract.CONTENT_URI,
                 projection,
                 null,
